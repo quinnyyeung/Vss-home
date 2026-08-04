@@ -16,6 +16,8 @@
   --font-sans: 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', Arial, sans-serif;
   /* 数字专用字体，只用在百分比、统计数字这类地方 */
   --font-number: 'SF Pro Display', 'SF Pro Text', -apple-system, 'Helvetica Neue', sans-serif;
+  /* 自定义响应式断点：≥1200px 用 wide: 前缀的 class */
+  --breakpoint-wide: 1200px;
 }
 
 /* 通用基础重置，跟设计稿无关，纯粹是消除浏览器默认样式（比如 body 默认 8px 外边距） */
