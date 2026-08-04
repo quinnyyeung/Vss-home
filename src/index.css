@@ -1,6 +1,23 @@
 /* Tailwind v4 的引入方式：一行代码引入 Tailwind 的基础样式和所有工具类 */
 @import "tailwindcss";
 
+/* 品牌色变量：定义一次，其他组件里直接用 bg-brand / text-brand-text 这样的 class 引用 */
+/* 之后设计稿颜色有调整，只改这两行就行，不用满项目找 class 改 */
+/* 文字三级灰阶：text-ink(一级/标题和重点内容) / text-ink-secondary(二级/正文) / text-ink-tertiary(三级/日期和辅助提示) */
+@theme {
+  --color-brand: #00b85c; /* 品牌绿：顶部导航栏背景、主色按钮、角标 */
+  --color-brand-text: #01a65c; /* 文字绿：链接文字、tab 选中态文字 */
+  --color-ink: #191919;
+  --color-ink-secondary: #666666;
+  --color-ink-tertiary: #949494;
+  --color-notice-text: #613700; /* 提示条（黄色底）里的文字颜色 */
+  --color-danger: #ff363f; /* 数据卡片里的红色文字（未达标数值） */
+  /* PingFang-简，Windows 环境没有这个字体时依次往后找 */
+  --font-sans: 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', Arial, sans-serif;
+  /* 数字专用字体，只用在百分比、统计数字这类地方 */
+  --font-number: 'SF Pro Display', 'SF Pro Text', -apple-system, 'Helvetica Neue', sans-serif;
+}
+
 /* 通用基础重置，跟设计稿无关，纯粹是消除浏览器默认样式（比如 body 默认 8px 外边距） */
 html,
 body,
@@ -10,4 +27,12 @@ body,
 
 body {
   margin: 0;
+  color: var(--color-ink);
+  font-weight: 400; /* 正文默认字重 400，标题另外用 font-semibold(600) */
+  font-family: var(--font-sans);
+}
+
+/* 数字专用字体：用在百分比、统计数字这类地方，例如 <span className="font-number"> */
+.font-number {
+  font-family: var(--font-number);
 }
