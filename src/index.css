@@ -1,0 +1,13 @@
+/* Tailwind v4 的引入方式：一行代码引入 Tailwind 的基础样式和所有工具类 */
+@import "tailwindcss";
+
+/* 通用基础重置，跟设计稿无关，纯粹是消除浏览器默认样式（比如 body 默认 8px 外边距） */
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+}
