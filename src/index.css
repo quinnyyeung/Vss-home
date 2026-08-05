@@ -11,7 +11,8 @@
   --color-ink-secondary: #666666;
   --color-ink-tertiary: #949494;
   --color-notice-text: #613700; /* 提示条（黄色底）里的文字颜色 */
-  --color-danger: #ff363f; /* 数据卡片里的红色文字（未达标数值） */
+  --color-danger: #ff363f; /* 数据卡片里的红色文字（未达标数值），也用作"高危"标签 */
+  --color-warning: #ff6600; /* 橙色，"中危"标签用 */
   /* PingFang-简，Windows 环境没有这个字体时依次往后找 */
   --font-sans: 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', Arial, sans-serif;
   /* 数字专用字体，只用在百分比、统计数字这类地方 */

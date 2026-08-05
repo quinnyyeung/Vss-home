@@ -28,7 +28,8 @@ Day 1 已经把整体骨架、设计 token、响应式规则都定下来了。Da
 | `--color-ink-secondary` | `#666666` | 二级文字：正文、列表项、表格内容 | `text-ink-secondary` |
 | `--color-ink-tertiary` | `#949494` | 三级文字：日期、辅助提示、chevron 箭头这类小图标 | `text-ink-tertiary` |
 | `--color-notice-text` | `#613700` | 黄色提示条（`bg-amber-50`）里的文字颜色 | `text-notice-text` |
-| `--color-danger` | `#ff363f` | 数据卡片里表示"未达标"/异常的红色文字 | `text-danger` |
+| `--color-danger` | `#ff363f` | 数据卡片里表示"未达标"/异常的红色文字，也用作"高危"标签 | `text-danger` / `bg-danger` |
+| `--color-warning` | `#ff6600` | 橙色，"中危"这类风险标签用 | `text-warning` / `bg-warning` |
 | `--font-sans` | PingFang SC 字体栈 | 全局正文字体，已经是 `body` 的默认字体 | 不用加 class |
 | `--font-number` | SF Pro 字体栈 | 数字专用字体，只用在大数值上：百分比、统计数字、角标里的数字 | `font-number` |
 | `--breakpoint-wide` | `1200px` | 自定义响应式断点，见下方"响应式规则" | `wide:` 前缀 |
@@ -39,8 +40,9 @@ Day 1 已经把整体骨架、设计 token、响应式规则都定下来了。Da
 
 - **白色卡片圆角 20px**：每个模块最外层的 `<section>` 用 `rounded-[20px]`
 - **灰色卡片/数据卡片圆角 12px**：比如任务中心里 4 个分类的灰色边框卡片、数据看板的指标卡片、流程导览的入口格子，用 `rounded-[12px]`
-- **任务条圆角 4px**：任务中心里每一行小的待办条目，Tailwind 默认的 `rounded`（不加数值）刚好是 4px，直接用就行
-- **卡片一律不加阴影**：不要用 `shadow-sm`、`shadow` 等 class
+- **任务条圆角 4px**：任务中心里每一行小的待办条目，Tailwind 默认的 `rounded`（不加数值）刚好是 4px，直接用就行；小的分段控件（比如评级汰换预警列表里的"商汰换/SKU汰换"切换按钮）、卡片外层的细边框容器也用这个 4px
+- **风险标签（高危/中危）圆角 2px**：`rounded-[2px]`，比普通任务条圆角更小。标签是"图标实心块 + 浅底文字"两段拼接的样式，不是纯色胶囊：图标那段用 `bg-danger`/`bg-warning` 实色底、白色图标；文字那段用 `bg-danger/10`/`bg-warning/10` 浅底、`text-danger`/`text-warning` 文字
+- **卡片一律不加阴影**：不要用 `shadow-sm`、`shadow` 等 class（悬浮的图表 hover 浮层例外，可以加阴影帮助跟下面的图表区分）
 - **左侧导航栏宽度固定 200px**
 - **右侧信息栏宽度固定 392px**：只在 `wide:`（≥1200px）时生效，小于 1200px 时不设固定宽度，让它撑满容器宽度
 - **顶部导航栏高度 64px**：`h-16`
@@ -58,6 +60,12 @@ Day 1 已经把整体骨架、设计 token、响应式规则都定下来了。Da
 | 数据卡片里"跟目标值对比"的辅助小字 | 10px | 400 | `text-[10px]` |
 
 全项目字重只有两档：标题 600（`font-semibold`），正文 400（默认，不用加 class）。不要用 `font-medium`（500）这种中间档。
+
+## 图表规范（ECharts，Day2 起定的）
+
+- 全项目图表库统一用 ECharts（`import * as echarts from 'echarts'`），不用 react 包装库，直接 `useRef` + `useEffect` 里 `echarts.init`，组件卸载时 `chart.dispose()`。
+- 图表跟下方图例（legend）之间的间距：`grid.bottom: 52`，图表容器高度在此基础上留够图例的空间（数据看板折线图用的是 `h-[300px]`），两个图表现在间距已经对齐，之后新增图表也用这组数值，不要用 ECharts 默认间距。
+- hover 浮层统一自定义样式：白底、`border-radius: 8px`、`box-shadow: 0 4px 16px rgba(0,0,0,0.12)`，标题是当前 x 轴的值（日期），下面每个系列一行，色块+系列名（灰色 `#666666`）+数值（`text-ink` 黑色，如果数值本身是"无评级"这类占位状态用 `text-ink-tertiary` 灰色）。
 
 ## 响应式规则
 
