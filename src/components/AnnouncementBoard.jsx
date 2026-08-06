@@ -9,15 +9,17 @@ import { ChevronIcon } from './Icons'
 const TABS = ['最新', '预警', '通知', '规则', '函件']
 
 // mock 数据：id 用于 React key，tag 用于按分类过滤，日期倒序排列即代表发布时间排序
+// 标题特意写成完整句子（不在字符串里手打"..."），超长时交给 CSS 的 truncate 自动省略，
+// 不是数据本身就是截断状态
 const ANNOUNCEMENTS = [
-  { id: 1, tag: '通知', title: 'SP-GYSM-39供应商违规申诉必知', date: '2024-07-29' },
-  { id: 2, tag: '预警', title: '采购单CG202403987222确认时...', date: '2024-07-26' },
-  { id: 3, tag: '通知', title: '苏州仓周转筐租赁及使用注意事项', date: '2024-07-26' },
-  { id: 4, tag: '规则', title: 'SP-GYSM-39供应商品质履约 管...', date: '2024-07-20' },
-  { id: 5, tag: '通知', title: '供应商杂筐送货 切勿与我方仓内...', date: '2024-07-18' },
-  { id: 6, tag: '预警', title: '采购单CG202404561120存在异常，请核实', date: '2024-07-15' },
-  { id: 7, tag: '规则', title: '供应商结算规则调整说明', date: '2024-07-10' },
-  { id: 8, tag: '函件', title: '关于开展2024年供应商合规自查的函', date: '2024-07-05' },
+  { id: 1, tag: '通知', title: 'SP-GYSM-39供应商违规申诉流程说明及常见问题解答', date: '2024-07-29' },
+  { id: 2, tag: '预警', title: '采购单CG202403987222确认时效即将到期，请尽快登录系统完成确认', date: '2024-07-26' },
+  { id: 3, tag: '通知', title: '苏州仓周转筐租赁及使用注意事项，请各供应商仔细阅读并遵守相关规定', date: '2024-07-26' },
+  { id: 4, tag: '规则', title: 'SP-GYSM-39供应商品质履约管理办法及考核标准说明', date: '2024-07-20' },
+  { id: 5, tag: '通知', title: '供应商杂筐送货时切勿与我方仓内其他物资混装，违者将按规定处理', date: '2024-07-18' },
+  { id: 6, tag: '预警', title: '采购单CG202404561120存在异常，请核实相关信息', date: '2024-07-15' },
+  { id: 7, tag: '规则', title: '供应商结算规则调整说明，新规则将于下月正式生效', date: '2024-07-10' },
+  { id: 8, tag: '函件', title: '关于开展2024年供应商合规自查工作的通知函', date: '2024-07-05' },
 ]
 
 function AnnouncementBoard() {
@@ -71,7 +73,7 @@ function AnnouncementBoard() {
                   {item.tag}
                 </span>
               )}
-              <span className="flex-1 truncate text-ink-secondary">{item.title}</span>
+              <span className="min-w-0 flex-1 truncate text-ink-secondary">{item.title}</span>
               <span className="shrink-0 text-xs text-ink-tertiary">{item.date}</span>
             </button>
           ))}

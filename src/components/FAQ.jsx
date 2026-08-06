@@ -20,15 +20,19 @@ function FAQ() {
           <ChevronIcon direction="right" className="h-4 w-4" />
         </span>
       </div>
-      <div className="flex flex-col gap-2.5">
-        {FAQ_ITEMS.map((item, index) => (
-          <div key={index} className="flex items-center gap-2 text-sm">
-            <span className="shrink-0 text-ink-tertiary">{index + 1}</span>
-            <span className="flex-1 truncate text-ink-secondary">{item.text}</span>
-            <span className="shrink-0 text-xs text-ink-tertiary">{item.date}</span>
-          </div>
-        ))}
-      </div>
+      {FAQ_ITEMS.length === 0 ? (
+        <p className="py-6 text-center text-sm text-ink-tertiary">暂无常见问题</p>
+      ) : (
+        <div className="flex flex-col gap-2.5">
+          {FAQ_ITEMS.map((item, index) => (
+            <div key={index} className="flex items-center gap-2 text-sm">
+              <span className="shrink-0 text-ink-tertiary">{index + 1}</span>
+              <span className="flex-1 truncate text-ink-secondary">{item.text}</span>
+              <span className="shrink-0 text-xs text-ink-tertiary">{item.date}</span>
+            </div>
+          ))}
+        </div>
+      )}
     </section>
   )
 }

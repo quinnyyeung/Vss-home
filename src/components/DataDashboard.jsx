@@ -289,9 +289,9 @@ function DataDashboard() {
       </div>
 
       {/* 提示条 */}
-      <div className="mb-4 flex items-center justify-between rounded bg-amber-50 px-4 py-2 text-sm text-notice-text">
-        <span>{NOTICE_TEXT[activeTab]}</span>
-        <span className="flex cursor-pointer items-center gap-0.5 whitespace-nowrap text-notice-text">
+      <div className="mb-4 flex items-center justify-between gap-2 rounded bg-amber-50 px-4 py-2 text-sm text-notice-text">
+        <span className="min-w-0 flex-1 truncate">{NOTICE_TEXT[activeTab]}</span>
+        <span className="flex shrink-0 cursor-pointer items-center gap-0.5 whitespace-nowrap text-notice-text">
           查看更多
           <ChevronIcon direction="right" className="h-4 w-4" />
         </span>

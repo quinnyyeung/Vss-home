@@ -172,15 +172,19 @@ function CityRatingTrendChart() {
 }
 
 // 评级结果 tab 的整体内容：左边趋势图 + 右边评级说明表格，表格顶部跟图表（不是图表上面的标题文字）对齐
+// 图表宽度是固定 518px（跟下面 chart.convertToPixel 算出来的对齐量绑定，不能跟着断点缩放），
+// 所以用 flex-wrap：空间不够并排时表格整个换到图表下面，而不是把整个页面撑出横向滚动条
+// （Day 5 响应式走查发现的问题：≥1200px 断点后右侧信息栏固定 392px，主内容区变窄，
+// 图表+表格加起来比主内容区可用宽度还宽，之前没有 flex-wrap 时会把整个页面撑宽出现横向滚动条）
 function RatingResultPanel() {
   return (
-    <div className="flex gap-6">
+    <div className="flex flex-wrap gap-6">
       <div className="shrink-0">
         <div className="mb-2 text-sm font-semibold text-ink">近半年各城市评级趋势图</div>
         <CityRatingTrendChart />
       </div>
 
-      <div className="flex-1">
+      <div className="min-w-[200px] flex-1">
         {/* 占位撑高：跟左边"近半年各城市评级趋势图"这行标题文字（含下边距）同高，
             再加 42.8px —— 这是用 chart.convertToPixel 实测出来的，S级 这条线（分类轴第一条，
             在 grid.top:20 的基础上还要再往下半个分类带高度）距图表容器顶部的精确像素值，
@@ -244,10 +248,10 @@ function DetailButton() {
 function CategoryWarningCard({ item, isLast }) {
   return (
     <div className={'flex items-center justify-between gap-4 py-4 ' + (isLast ? '' : 'border-b border-gray-100')}>
-      <div className="flex-1">
-        <div className="mb-2 flex items-center gap-2">
+      <div className="min-w-0 flex-1">
+        <div className="mb-2 flex min-w-0 items-center gap-2">
           <RiskBadge level={item.level} />
-          <span className="text-sm font-semibold text-ink">
+          <span className="truncate text-sm font-semibold text-ink">
             {item.title}｜{item.city}
           </span>
         </div>
@@ -277,18 +281,21 @@ function CategoryWarningCard({ item, isLast }) {
 }
 
 // "SKU汰换"子 tab 的一张预警卡片
+// 6 个字段用 3 列网格摆不下时（评级结果卡片挤在中间断点区间），先把列间距从 64px 缩小，
+// 缩到项目统一间距下限 16px 还是不够宽的话就降成 2 列——用 @container 让这个判断跟着
+// 卡片自己的宽度走，不跟主内容区/右侧栏之间的全局断点混在一起
 function SkuWarningCard({ item, isLast }) {
   return (
     <div className={'flex items-center justify-between gap-4 py-4 ' + (isLast ? '' : 'border-b border-gray-100')}>
-      <div className="flex-1">
-        <div className="mb-2 flex items-center gap-2">
+      <div className="min-w-0 flex-1 @container">
+        <div className="mb-2 flex min-w-0 items-center gap-2">
           <RiskBadge level={item.level} />
-          <span className="text-sm font-semibold text-ink">
+          <span className="truncate text-sm font-semibold text-ink">
             {item.title}｜{item.city}
           </span>
         </div>
         <div className="mb-3 text-xs text-ink-tertiary">{item.merchant}</div>
-        <div className="grid grid-cols-3 gap-x-16 gap-y-1.5 text-xs">
+        <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 text-xs @[420px]:grid-cols-3 @[420px]:gap-x-6">
           <div className="flex gap-2">
             <span className="text-ink-tertiary">SKU ID</span>
             <span className="text-ink">{item.skuId}</span>
@@ -365,9 +372,9 @@ function RatingWarningsPanel() {
   return (
     <div>
       {/* 提示条 */}
-      <div className="mb-4 flex items-center justify-between rounded bg-amber-50 px-4 py-2 text-sm text-notice-text">
-        <span>首页至多展示排序靠前的5条预警信息</span>
-        <span className="flex cursor-pointer items-center gap-0.5 whitespace-nowrap text-notice-text">
+      <div className="mb-4 flex items-center justify-between gap-2 rounded bg-amber-50 px-4 py-2 text-sm text-notice-text">
+        <span className="min-w-0 flex-1 truncate">首页至多展示排序靠前的5条预警信息</span>
+        <span className="flex shrink-0 cursor-pointer items-center gap-0.5 whitespace-nowrap text-notice-text">
           具体说明
           <ChevronIcon direction="right" className="h-4 w-4" />
         </span>
@@ -439,12 +446,12 @@ function RatingElimination() {
       {activeTab === 0 ? (
         <>
           {/* 提示条（评级结果 tab 自己的提示条，跟汰换预警 tab 的不一样） */}
-          <div className="mb-4 flex items-center justify-between rounded bg-amber-50 px-4 py-2 text-sm text-notice-text">
-            <span>根据供应商的采购规模与履约水平，平台定义S、A、B、C分别为绩效优秀、良好、合格、较差</span>
-            <span className="flex cursor-pointer items-center gap-0.5 whitespace-nowrap text-notice-text">
-          具体说明
-          <ChevronIcon direction="right" className="h-4 w-4" />
-        </span>
+          <div className="mb-4 flex items-center justify-between gap-2 rounded bg-amber-50 px-4 py-2 text-sm text-notice-text">
+            <span className="min-w-0 flex-1 truncate">根据供应商的采购规模与履约水平，平台定义S、A、B、C分别为绩效优秀、良好、合格、较差</span>
+            <span className="flex shrink-0 cursor-pointer items-center gap-0.5 whitespace-nowrap text-notice-text">
+              具体说明
+              <ChevronIcon direction="right" className="h-4 w-4" />
+            </span>
           </div>
           <RatingResultPanel />
         </>

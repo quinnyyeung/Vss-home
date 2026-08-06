@@ -51,14 +51,14 @@ function TaskCenter() {
                   key={item.label}
                   type="button"
                   className={
-                    'flex cursor-pointer items-center justify-between rounded px-3 py-2 text-left text-sm transition-colors ' +
+                    'flex cursor-pointer items-center justify-between gap-2 rounded px-3 py-2 text-left text-sm transition-colors ' +
                     (item.highlight
                       ? 'bg-green-50 text-ink hover:bg-green-100 active:bg-green-200'
                       : 'text-ink-secondary hover:bg-gray-50 active:bg-gray-100')
                   }
                 >
-                  <span>{item.label}</span>
-                  <span className="flex items-center gap-1.5">
+                  <span className="min-w-0 flex-1 truncate">{item.label}</span>
+                  <span className="flex shrink-0 items-center gap-1.5">
                     {item.badge && (
                       <span className="font-number flex h-4 w-4 items-center justify-center rounded-full bg-brand text-[10px] text-white">
                         {item.badge}

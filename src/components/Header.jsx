@@ -8,7 +8,7 @@ const NAV_LINKS = ['流程导览', '移动端下载', '廉正举报']
 
 const CURRENT_USER = 'mtmccs123'
 
-function Header() {
+function Header({ onProcessGuideClick }) {
   return (
     <header className="sticky top-0 z-20 flex h-16 shrink-0 items-center justify-between bg-brand px-6 text-white">
       {/* 左侧：logo + 当前供应商切换下拉 */}
@@ -27,12 +27,16 @@ function Header() {
       {/* 右侧：功能链接 + 当前账号 */}
       <div className="flex items-center gap-6 text-sm">
         {NAV_LINKS.map((link) => (
-          <span key={link} className="cursor-pointer text-white/90 hover:text-white">
+          <span
+            key={link}
+            onClick={link === '流程导览' ? () => onProcessGuideClick?.() : undefined}
+            className="cursor-pointer text-white/90 hover:text-white"
+          >
             {link}
           </span>
         ))}
         <button className="flex items-center gap-1 text-white/90 hover:text-white">
-          <span>{CURRENT_USER}</span>
+          <span className="max-w-[160px] truncate">{CURRENT_USER}</span>
           <ChevronIcon direction="down" className="h-4 w-4" />
         </button>
       </div>
