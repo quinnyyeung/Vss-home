@@ -39,3 +39,11 @@ body {
 .font-number {
   font-family: var(--font-number);
 }
+
+/* 隐藏滚动条但保留滚动功能：用在侧边导航这类内容超高需要内部滚动、又不想露出滚动条的地方 */
+.no-scrollbar {
+  scrollbar-width: none; /* Firefox */
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome/Safari/Edge */
+}

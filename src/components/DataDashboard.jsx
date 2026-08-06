@@ -3,6 +3,7 @@
 // 两个 tab 内容高度不一样，容器高度跟着当前选中的 tab 内容自然撑高，没有做固定高度
 import { useEffect, useRef, useState } from 'react'
 import * as echarts from 'echarts'
+import { ChevronIcon } from './Icons'
 
 const TABS = ['履约数据', '采购订单数据']
 
@@ -290,12 +291,15 @@ function DataDashboard() {
       {/* 提示条 */}
       <div className="mb-4 flex items-center justify-between rounded bg-amber-50 px-4 py-2 text-sm text-notice-text">
         <span>{NOTICE_TEXT[activeTab]}</span>
-        <span className="cursor-pointer whitespace-nowrap text-notice-text">查看更多 ›</span>
+        <span className="flex cursor-pointer items-center gap-0.5 whitespace-nowrap text-notice-text">
+          查看更多
+          <ChevronIcon direction="right" className="h-4 w-4" />
+        </span>
       </div>
 
       {/* 城市筛选下拉（今天只做视觉） */}
       <button className="mb-4 flex items-center gap-1 rounded border border-gray-200 px-3 py-1.5 text-sm text-ink-secondary">
-        北京（含廊坊） <span className="text-xs text-ink-tertiary">⌄</span>
+        北京（含廊坊） <ChevronIcon direction="down" className="h-4 w-4 text-ink-tertiary" />
       </button>
 
       {activeTab === 0 ? <FulfillmentMetrics /> : <PurchaseOrderChart />}

@@ -2,6 +2,7 @@
 // Day3：评级结果 tab 是 ECharts 折线图；汰换预警 tab 是预警卡片列表（里面还有"商汰换/SKU汰换"两个子 tab）+ 分页
 import { useEffect, useRef, useState } from 'react'
 import * as echarts from 'echarts'
+import { ChevronIcon } from './Icons'
 
 const TABS = ['评级结果', '汰换预警']
 
@@ -13,12 +14,12 @@ const RATING_TABLE = [
   { level: 'C级', status: '停采高风险' },
 ]
 
-// mock 数据：近半年(2023-01~2023-06)各城市评级趋势
-// 数值是参照截图曲线走势编写的示意数据，唯一有确切依据的锚点是截图里 hover 在 2023-03 时显示的
+// mock 数据：近半年(2024-01~2024-06)各城市评级趋势
+// 数值是参照截图曲线走势编写的示意数据，唯一有确切依据的锚点是截图里 hover 在 2024-03 时显示的
 // 5 个城市评级（北京S/上海A/深圳B/广州C/苏州无评级），其余月份是按曲线形状估的，
 // 如果要跟设计稿逐点对上，需要你提供真实评级数据表
 const RATING_LEVELS = ['无评级', 'C级', 'B级', 'A级', 'S级'] // 从下到上，y轴分类顺序
-const RATING_MONTHS = ['2023-01', '2023-02', '2023-03', '2023-04', '2023-05', '2023-06']
+const RATING_MONTHS = ['2024-01', '2024-02', '2024-03', '2024-04', '2024-05', '2024-06']
 
 const CITY_TREND_SERIES = [
   { name: '北京（含廊坊）', color: '#347BED', data: ['S级', 'S级', 'S级', 'S级', 'S级', 'S级'] },
@@ -58,8 +59,8 @@ const CATEGORY_WARNINGS = Array.from({ length: 40 }, (_, i) => {
     title: WARNING_CATEGORIES[i % WARNING_CATEGORIES.length],
     city,
     merchant: WARNING_CITY_MERCHANTS[city],
-    period: '202306',
-    dueMonth: '202309',
+    period: '202406',
+    dueMonth: '202409',
     dataRange: '综合1~2月',
     result: 'C',
   }
@@ -75,8 +76,8 @@ const SKU_WARNINGS = Array.from({ length: 40 }, (_, i) => {
     merchant: WARNING_CITY_MERCHANTS[city],
     skuId: String(24795 + i),
     category: WARNING_CATEGORIES[i % WARNING_CATEGORIES.length],
-    period: '202306',
-    dueMonth: '202309',
+    period: '202406',
+    dueMonth: '202409',
     currentResult: 'C',
     totalResult: 'C',
   }
@@ -328,7 +329,7 @@ function Pagination({ page, totalPages, onChange }) {
         disabled={page === 1}
         className="text-ink-secondary disabled:cursor-not-allowed disabled:text-ink-tertiary"
       >
-        ‹
+        <ChevronIcon direction="left" className="h-4 w-4" />
       </button>
       <span className="text-ink-secondary">
         {page} / {totalPages}
@@ -338,7 +339,7 @@ function Pagination({ page, totalPages, onChange }) {
         disabled={page === totalPages}
         className="text-ink-secondary disabled:cursor-not-allowed disabled:text-ink-tertiary"
       >
-        ›
+        <ChevronIcon direction="right" className="h-4 w-4" />
       </button>
     </div>
   )
@@ -366,7 +367,10 @@ function RatingWarningsPanel() {
       {/* 提示条 */}
       <div className="mb-4 flex items-center justify-between rounded bg-amber-50 px-4 py-2 text-sm text-notice-text">
         <span>首页至多展示排序靠前的5条预警信息</span>
-        <span className="cursor-pointer whitespace-nowrap text-notice-text">具体说明 ›</span>
+        <span className="flex cursor-pointer items-center gap-0.5 whitespace-nowrap text-notice-text">
+          具体说明
+          <ChevronIcon direction="right" className="h-4 w-4" />
+        </span>
       </div>
 
       {/* 外层边框容器圆角 4px，跟任务条/分段控件同一个规格
@@ -437,7 +441,10 @@ function RatingElimination() {
           {/* 提示条（评级结果 tab 自己的提示条，跟汰换预警 tab 的不一样） */}
           <div className="mb-4 flex items-center justify-between rounded bg-amber-50 px-4 py-2 text-sm text-notice-text">
             <span>根据供应商的采购规模与履约水平，平台定义S、A、B、C分别为绩效优秀、良好、合格、较差</span>
-            <span className="cursor-pointer whitespace-nowrap text-notice-text">具体说明 ›</span>
+            <span className="flex cursor-pointer items-center gap-0.5 whitespace-nowrap text-notice-text">
+          具体说明
+          <ChevronIcon direction="right" className="h-4 w-4" />
+        </span>
           </div>
           <RatingResultPanel />
         </>

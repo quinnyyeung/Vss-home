@@ -1,5 +1,7 @@
 // 任务中心：4 个待办分类卡片，每张卡片第一项是高亮的"待处理"事项（带数字角标）
 // mock 数据：每张卡片的标题和事项列表，highlight: true 表示要高亮显示、badge 是角标数字
+import { ChevronIcon } from './Icons'
+
 const TASK_CARDS = [
   {
     title: '商品信息',
@@ -45,11 +47,14 @@ function TaskCenter() {
             <h3 className="mb-3 text-sm font-semibold text-ink">{card.title}</h3>
             <div className="flex flex-col gap-2">
               {card.items.map((item) => (
-                <div
+                <button
                   key={item.label}
+                  type="button"
                   className={
-                    'flex items-center justify-between rounded px-3 py-2 text-sm ' +
-                    (item.highlight ? 'bg-green-50 text-ink' : 'text-ink-secondary')
+                    'flex cursor-pointer items-center justify-between rounded px-3 py-2 text-left text-sm transition-colors ' +
+                    (item.highlight
+                      ? 'bg-green-50 text-ink hover:bg-green-100 active:bg-green-200'
+                      : 'text-ink-secondary hover:bg-gray-50 active:bg-gray-100')
                   }
                 >
                   <span>{item.label}</span>
@@ -59,9 +64,9 @@ function TaskCenter() {
                         {item.badge}
                       </span>
                     )}
-                    <span className="text-ink-tertiary">›</span>
+                    <ChevronIcon direction="right" className="h-4 w-4 text-ink" />
                   </span>
-                </div>
+                </button>
               ))}
             </div>
           </div>
