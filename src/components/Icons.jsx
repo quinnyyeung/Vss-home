@@ -14,6 +14,11 @@ import printerIcon from '../assets/icons/printer.png'
 import bankCardIcon from '../assets/icons/bank-card.png'
 import contactsIcon from '../assets/icons/contacts.png'
 import themeIcon from '../assets/icons/theme.png'
+import feedbackIcon from '../assets/icons/feedback.png'
+import commentIcon from '../assets/icons/comment.png'
+import surveyIcon from '../assets/icons/survey.png'
+import closeIcon from '../assets/icons/close.png'
+import newChatIcon from '../assets/icons/new-chat.png'
 
 function MaskIcon({ src, className }) {
   return (
@@ -56,6 +61,21 @@ export function ContactIcon({ className }) {
 }
 export function GridIcon({ className }) {
   return <MaskIcon src={themeIcon} className={className} />
+}
+export function FeedbackIcon({ className }) {
+  return <MaskIcon src={feedbackIcon} className={className} />
+}
+export function CommentIcon({ className }) {
+  return <MaskIcon src={commentIcon} className={className} />
+}
+export function SurveyIcon({ className }) {
+  return <MaskIcon src={surveyIcon} className={className} />
+}
+export function CloseIcon({ className }) {
+  return <MaskIcon src={closeIcon} className={className} />
+}
+export function NewChatIcon({ className }) {
+  return <MaskIcon src={newChatIcon} className={className} />
 }
 
 const CHEVRON_ROTATION = {

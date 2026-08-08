@@ -20,6 +20,7 @@ import ProcessGuide from './components/ProcessGuide'
 import ProcessGuidePage from './components/ProcessGuidePage'
 import TrainingCenter from './components/TrainingCenter'
 import FAQ from './components/FAQ'
+import AssistantBar from './components/AssistantBar'
 
 function App() {
   const [page, setPage] = useState('home') // 'home' | 'process-guide'
@@ -33,6 +34,7 @@ function App() {
   return (
     // min-w-[1024px]：整个页面最窄只收缩到 1024px，再窄就出现横向滚动条，不继续挤压布局
     <div className="min-h-screen min-w-[1024px] bg-gray-100">
+      <AssistantBar />
       <Header onProcessGuideClick={() => openProcessGuide(0)} />
       {/* 侧边栏和内容区之间空 16px（gap-4），内容区右边留 16px 页面边距（pr-4） */}
       <div className="flex gap-4 pr-4">
