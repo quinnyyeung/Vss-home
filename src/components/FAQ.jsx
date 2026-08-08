@@ -23,13 +23,17 @@ function FAQ() {
       {FAQ_ITEMS.length === 0 ? (
         <p className="py-6 text-center text-sm text-ink-tertiary">暂无常见问题</p>
       ) : (
-        <div className="flex flex-col gap-2.5">
+        <div className="flex flex-col gap-1">
           {FAQ_ITEMS.map((item, index) => (
-            <div key={index} className="flex items-center gap-2 text-sm">
+            <button
+              key={index}
+              type="button"
+              className="flex cursor-pointer items-center gap-2 rounded px-1 py-1.5 text-left text-sm transition-colors hover:bg-gray-50"
+            >
               <span className="shrink-0 text-ink-tertiary">{index + 1}</span>
               <span className="flex-1 truncate text-ink-secondary">{item.text}</span>
               <span className="shrink-0 text-xs text-ink-tertiary">{item.date}</span>
-            </div>
+            </button>
           ))}
         </div>
       )}

@@ -19,14 +19,18 @@ function TrainingCenter() {
       </div>
       <div className="grid grid-cols-2 gap-3">
         {TRAINING_STATS.map((stat) => (
-          <div key={stat.label} className="rounded border border-gray-100 p-3">
+          <button
+            key={stat.label}
+            type="button"
+            className="cursor-pointer rounded border border-gray-100 p-3 text-left transition-colors hover:bg-gray-50"
+          >
             <div className="mb-1 text-xs text-ink-tertiary">{stat.label} ⓘ</div>
             <div className="text-xl font-semibold text-ink">
               <span className="font-number">{stat.count}</span>{' '}
               <span className="text-xs font-normal text-ink-tertiary">门</span>
             </div>
             <div className="text-xs text-ink-tertiary">待学习</div>
-          </div>
+          </button>
         ))}
       </div>
     </section>

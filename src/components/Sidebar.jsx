@@ -7,8 +7,9 @@
 // 2. 整个侧边栏可以收起成一条窄边（点顶部箭头按钮），收起后只剩一个展开按钮
 // 3. 点击二级菜单项会高亮成选中态（浅绿底+绿字）
 // 4. 侧边栏自己独立滚动（sticky 定位 + 内部 overflow-y-auto），滚动条隐藏（见 index.css 的 .no-scrollbar）
-// 截图里还有"文字超长时 hover 弹出完整文案"的 tooltip 细节，今天先跳过——现有 mock 数据的条目都不会触发换行/截断，
-// 且 tooltip 的颜色/间距截图上也看不出精确值，等真的有超长文案再做
+// 5. 子菜单文字被 truncate 省略号截断时，hover 弹出完整文案的 tooltip（Day 6 补）：
+//    tooltip 用 position:fixed（不用 absolute），因为 nav 本身有 overflow-y-auto 会连带裁掉 x 方向的溢出，
+//    fixed 定位能跳出这层裁剪；样式沿用图表 hover 浮层同一套（白底、rounded-lg、同一个 box-shadow）保持全项目一致
 import { useState } from 'react'
 import {
   HomeIcon,
@@ -47,6 +48,16 @@ function Sidebar() {
   const [expandedGroups, setExpandedGroups] = useState(() => new Set(NAV_GROUPS.map((g) => g.title)))
   // 当前选中的二级菜单项，默认没有选中
   const [selectedItem, setSelectedItem] = useState(null)
+  // 当前 hover 且文字被截断的子菜单项，用来弹 tooltip；没有截断就不设置，tooltip 不出现
+  const [tooltip, setTooltip] = useState(null) // { text, top, left } | null
+
+  const handleItemMouseEnter = (e, item) => {
+    const el = e.currentTarget
+    if (el.scrollWidth <= el.clientWidth) return
+    const rect = el.getBoundingClientRect()
+    setTooltip({ text: item, top: rect.top, left: rect.left + rect.width / 2 })
+  }
+  const handleItemMouseLeave = () => setTooltip(null)
 
   const toggleGroup = (title) => {
     setExpandedGroups((prev) => {
@@ -117,14 +128,17 @@ function Sidebar() {
               </button>
 
               {isOpen && (
-                <div className="grid grid-cols-2 gap-x-1 gap-y-1 px-2 pb-2">
+                // pl-6 + 子项按钮自己的 px-2，让子项文字跟分组标题文字（图标宽 16px + gap-2 8px）左对齐
+                <div className="grid grid-cols-2 gap-x-1 gap-y-1 py-2 pl-6 pr-2">
                   {group.items.map((item) => (
                     <button
                       key={item}
                       type="button"
                       onClick={() => setSelectedItem(item)}
+                      onMouseEnter={(e) => handleItemMouseEnter(e, item)}
+                      onMouseLeave={handleItemMouseLeave}
                       className={
-                        'cursor-pointer truncate rounded px-2 py-1 text-left text-xs transition-colors ' +
+                        'cursor-pointer truncate rounded px-2 py-1 text-left text-sm transition-colors ' +
                         (selectedItem === item
                           ? 'bg-green-50 text-brand-text'
                           : 'text-ink-secondary hover:bg-gray-50 hover:text-brand-text')
@@ -139,6 +153,15 @@ function Sidebar() {
           )
         })}
       </nav>
+
+      {tooltip && (
+        <div
+          style={{ position: 'fixed', top: tooltip.top - 6, left: tooltip.left, transform: 'translate(-50%, -100%)' }}
+          className="pointer-events-none z-50 whitespace-nowrap rounded-lg bg-white px-2 py-1 text-xs text-ink shadow-[0_4px_16px_rgba(0,0,0,0.12)]"
+        >
+          {tooltip.text}
+        </div>
+      )}
     </aside>
   )
 }
