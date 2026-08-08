@@ -128,8 +128,11 @@ function Sidebar() {
               </button>
 
               {isOpen && (
-                // pl-6 + 子项按钮自己的 px-2，让子项文字跟分组标题文字（图标宽 16px + gap-2 8px）左对齐
-                <div className="grid grid-cols-2 gap-x-1 gap-y-1 py-2 pl-6 pr-2">
+                // 不加左内边距：子项按钮自己的 px-2 就够让文字跟上面分组图标左边缘对齐，
+                // 不跟分组标题文字对齐（那样会空出图标的宽度，二级菜单可用宽度太窄，文字大多会被截断）
+                // 只留 pb-2（不加顶部 padding）：一级和二级之间的间距完全靠分组按钮自己的 py-2 撑出来，
+                // 之前手滑写成 py-2 多加了一层顶部间距，导致一二级导航之间的间距比设计稿宽了一倍
+                <div className="grid grid-cols-2 gap-x-1 gap-y-1 pb-2 pr-2">
                   {group.items.map((item) => (
                     <button
                       key={item}
